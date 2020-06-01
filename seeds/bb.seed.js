@@ -15,10 +15,11 @@ axios.get('https://breakingbadapi.com/api/characters')
             let characters = [];
             data.forEach(
                 character => {
-                    let charQuotes = quotes.map(
+                    let charQuotes = [];
+                    quotes.map(
                         elem => {
-                            if(elem.name === character.author){
-                                return elem.quote
+                            if(elem.author === character.name){
+                                charQuotes.push(elem.quote)
                             }
                         }
                     )
