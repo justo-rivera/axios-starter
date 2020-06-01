@@ -1,0 +1,16 @@
+<div class="flex-columns">
+    {{#each characters}}
+        <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{this.img}}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-header">{{this.name}}</h5>
+            <p class="card-text">
+                <ul>
+                    {{#each this.quotes}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul></p>
+        </div>
+        </div>
+    {{/each}}
+</div>

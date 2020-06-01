@@ -14,4 +14,12 @@ router.get('/characters', (req, res) => {
         .catch( err => res.send(err))
 })
 
+router.get('/quotes', (req, res) => {
+    BBModel.find({quotes: {$not: {$size: 0}}})
+        .then( characters => 
+            res.render('bb-quotes.hbs', {characters})
+            )
+        .catch( err => console.error(err))
+})
+
 module.exports = router;
