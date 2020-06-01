@@ -2,14 +2,34 @@ const axios = require('axios')
 const mongoose = require('mongoose');
 const BBModel = require('../models/bb.model');
 require('../config/database.config')
-
+let quotes = [];
+axios.get('https://breakingbadapi.com/api/quotes')
+    .then(
+        ({data}) => {
+            quotes = data;
+        }
+    )
 axios.get('https://breakingbadapi.com/api/characters')
     .then(
         ({data}) => {
-            BBModel.create(data)
+            let characters = [];
+            data.forEach(
+                character => {
+                    let charQuotes = quotes.map(
+                        elem => {
+                            if(elem.name === character.author){
+                                return elem.quote
+                            }
+                        }
+                    )
+                    character.quotes = charQuotes
+                    characters.push(character)
+                }
+            )
+            
+            BBModel.create(characters)
                 .then(
                     resp => {
-                        console.log(resp)
                         mongoose.disconnect()
                     })
                 .catch(err=> console.error(err))
